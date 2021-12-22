@@ -40,7 +40,7 @@ def fetch_driver():
     opts.headless = True
 
     # Setting up driver
-    driver_path = Service(r"..\ProfleBabaDataApi\chromedriver_win32\chromedriver.exe")
+    driver_path = Service(r"..\chromedriver_win32\chromedriver.exe")
     my_driver = webdriver.Chrome(service=driver_path, options=opts)
 
     return my_driver
