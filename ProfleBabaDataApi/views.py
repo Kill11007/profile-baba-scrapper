@@ -10,7 +10,6 @@ from selenium.webdriver.chrome.service import Service
 # Other imports
 import random
 import requests
-import pandas as pd
 from bs4 import BeautifulSoup
 from requests_html import HTMLSession
 
