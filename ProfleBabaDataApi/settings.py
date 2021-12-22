@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-za*+2groppk$b1gcoegf0ms&ywn+g47kgra=1r$#uls4b+j9!!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'https://web-scrapper-api.profilebaba.com']
 
 
 # Application definition
@@ -118,12 +118,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
