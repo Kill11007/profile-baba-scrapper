@@ -1,1 +1,1 @@
-web gunicorn ProfleBabaDataApi.wsgi
+web: gunicorn ProfleBabaDataApi.wsgi
