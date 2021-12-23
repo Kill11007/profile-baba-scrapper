@@ -21,7 +21,8 @@ from requests_html import HTMLSession
 def fetch_driver():
 
     # For proxy list of India from (https://docs.proxyscrape.com)
-    proxy_url = 'https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=US&ssl=all&anonymity=all'
+    proxy_url = r'https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=' \
+                r'US&ssl=all&anonymity=all'
     proxies = requests.get(proxy_url).text.split('\r\n')[:-1]
 
     # Setting proxy settings
@@ -47,9 +48,7 @@ def fetch_driver():
     opts.add_argument("--headless")
     opts.add_argument("--disable-dev-shm-usage")
     opts.add_argument("--no-sandbox")
-    print('I am here...')
-    print('os.environ.get("CHROMEDRIVER_PATH") :', os.environ.get("CHROMEDRIVER_PATH"))
-    my_driver = webdriver.Chrome(executable_path=r"C:\Users\Mayank\Gautam_GitHub\ProfileBaba\profile-baba scraper\ProfleBabaDataApi\chromedriver.exe", options=opts)
+    my_driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=opts)
 
     return my_driver
 
@@ -239,13 +238,12 @@ def snippet_list(request):
             address = query['address']
             no_of_records_for_jd = query['nr_jd']
             no_of_records_for_google = query['nr_google']
-            print('request', request)
             data = my_scraper(state, cat, address, int(no_of_records_for_jd), int(no_of_records_for_google))
             print('data', data)
             return JsonResponse(data, safe=False)
         except Exception as e:
+            print('Exception in Api get request :', e)
             status_code = 501
             message = "Internal Server Error"
-            print(e)
             return JsonResponse({message: e}, status=status_code)
 
