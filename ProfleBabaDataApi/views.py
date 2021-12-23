@@ -6,8 +6,8 @@ from rest_framework.decorators import api_view
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+# from selenium.webdriver.chrome.service import Service
+# from webdriver_manager.chrome import ChromeDriverManager
 # Other imports
 import os
 import random
@@ -38,15 +38,19 @@ def fetch_driver():
     opts.add_argument("user-agent=user_agent")
 
     # Setting headless browser
-    opts.headless = True
-
-    # You will need to specify the binary location for Heroku
-    opts.binary_location = os.getenv('GOOGLE_CHROME_BIN')
+    # opts.headless = True
 
     # Setting up driver
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
+    my_driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
+
     # driver_path = Service(f'{os.path.dirname(os.path.abspath("chromedriver.exe"))}\\chromedriver.exe')
     # my_driver = webdriver.Chrome(ChromeDriverManager().install(), options=opts)
-    my_driver = webdriver.Chrome(executable_path=os.getenv('CHROME_EXECUTABLE_PATH'), options=opts)
+    # my_driver = webdriver.Chrome(service=driver_path, options=opts)
 
     return my_driver
 
