@@ -6,8 +6,10 @@ from rest_framework.decorators import api_view
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 # Other imports
+import os
 import random
 import requests
 from bs4 import BeautifulSoup
@@ -39,8 +41,9 @@ def fetch_driver():
     opts.headless = True
 
     # Setting up driver
+    driver_path = Service(f'{os.path.dirname(os.path.abspath("chromedriver.exe"))}\\chromedriver.exe')
     # my_driver = webdriver.Chrome(ChromeDriverManager().install(), options=opts)
-    my_driver = webdriver.Chrome(executable_path=r'C:\Users\Mayank\Gautam_GitHub\ProfileBaba\profile-baba scraper\ProfleBabaDataApi\chromedriver.exe', options=opts)
+    my_driver = webdriver.Chrome(service=driver_path, options=opts)
 
     return my_driver
 
