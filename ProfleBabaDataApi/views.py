@@ -39,8 +39,8 @@ def fetch_driver():
     opts.headless = True
 
     # Setting up driver
-    my_driver = webdriver.Chrome(ChromeDriverManager().install(), options=opts)
-    # my_driver = webdriver.Chrome(service=driver_path, options=opts)
+    # my_driver = webdriver.Chrome(ChromeDriverManager().install(), options=opts)
+    my_driver = webdriver.Chrome(executable_path=r'..\chromedriver.exe', options=opts)
 
     return my_driver
 
