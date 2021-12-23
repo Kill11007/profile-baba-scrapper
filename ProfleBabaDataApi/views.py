@@ -1,15 +1,10 @@
 # Django imports
-import time
-
-from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 # Selenium imports
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-# from selenium.webdriver.chrome.service import Service
-# from webdriver_manager.chrome import ChromeDriverManager
 # Other imports
 import os
 import random
@@ -45,7 +40,6 @@ def fetch_driver():
     # Setting up driver
     opts.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     opts.headless = True
-    opts.add_argument("--headless")
     opts.add_argument("--disable-dev-shm-usage")
     opts.add_argument("--no-sandbox")
     my_driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=opts)
@@ -177,7 +171,7 @@ def for_google(query, no_of_records):
 
 def for_just_dial(query, cat, no_of_records):
     store_details = session.get('https://www.justdial.com/' + query).html.find('div.store-details')
-
+    print('store_details :', len(store_details))
     if len(store_details) < no_of_records:
         fetch_rec = len(store_details)
     else:
