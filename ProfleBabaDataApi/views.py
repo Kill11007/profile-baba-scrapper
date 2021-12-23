@@ -38,15 +38,14 @@ def fetch_driver():
     opts.add_argument("user-agent=user_agent")
 
     # Setting headless browser
-    # opts.headless = True
 
     # Setting up driver
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--no-sandbox")
-    my_driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
+    opts.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    opts.headless = True
+    # chrome_options.add_argument("--headless")
+    opts.add_argument("--disable-dev-shm-usage")
+    opts.add_argument("--no-sandbox")
+    my_driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=opts)
 
     # driver_path = Service(f'{os.path.dirname(os.path.abspath("chromedriver.exe"))}\\chromedriver.exe')
     # my_driver = webdriver.Chrome(ChromeDriverManager().install(), options=opts)
@@ -55,11 +54,14 @@ def fetch_driver():
     return my_driver
 
 
-# session for requests
-session = HTMLSession()
+try:
+    # session for requests
+    session = HTMLSession()
 
-# Getting driver
-driver = fetch_driver()
+    # Getting driver
+    driver = fetch_driver()
+except Exception as e:
+    print('error in driver :', e)
 
 # my_dict for df
 urls, names, directions, near_areas, phones, ratings, reviews, categories, websites = [], [], [], [], [], [], [], [], []
@@ -232,11 +234,13 @@ def snippet_list(request):
             address = query['address']
             no_of_records_for_jd = query['nr_jd']
             no_of_records_for_google = query['nr_google']
-
+            print('request', request)
             data = my_scraper(state, cat, address, int(no_of_records_for_jd), int(no_of_records_for_google))
+            print('data', data)
             return Response(data)
         except Exception as e:
             status_code = 501
             message = "Internal Server Error"
+            print(e)
             return JsonResponse({message: e}, status=status_code)
 
