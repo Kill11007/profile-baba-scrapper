@@ -40,7 +40,7 @@ def fetch_driver():
 
     # Setting up driver
     # my_driver = webdriver.Chrome(ChromeDriverManager().install(), options=opts)
-    my_driver = webdriver.Chrome(executable_path=r'..\chromedriver.exe', options=opts)
+    my_driver = webdriver.Chrome(executable_path=r'C:\Users\Mayank\Gautam_GitHub\ProfileBaba\profile-baba scraper\ProfleBabaDataApi\chromedriver.exe', options=opts)
 
     return my_driver
 
