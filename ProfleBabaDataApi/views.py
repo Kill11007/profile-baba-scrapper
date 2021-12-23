@@ -40,10 +40,13 @@ def fetch_driver():
     # Setting headless browser
     opts.headless = True
 
+    # You will need to specify the binary location for Heroku
+    opts.binary_location = os.getenv('GOOGLE_CHROME_BIN')
+
     # Setting up driver
-    driver_path = Service(f'{os.path.dirname(os.path.abspath("chromedriver.exe"))}\\chromedriver.exe')
+    # driver_path = Service(f'{os.path.dirname(os.path.abspath("chromedriver.exe"))}\\chromedriver.exe')
     # my_driver = webdriver.Chrome(ChromeDriverManager().install(), options=opts)
-    my_driver = webdriver.Chrome(service=driver_path, options=opts)
+    my_driver = webdriver.Chrome(executable_path=os.getenv('CHROME_EXECUTABLE_PATH'), options=opts)
 
     return my_driver
 
