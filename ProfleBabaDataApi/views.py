@@ -41,7 +41,7 @@ def fetch_driver():
 
     # Setting up driver
     opts.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    opts.headless = True
+    opts.headless = False
     # chrome_options.add_argument("--headless")
     opts.add_argument("--disable-dev-shm-usage")
     opts.add_argument("--no-sandbox")
