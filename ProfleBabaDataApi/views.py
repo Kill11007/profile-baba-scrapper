@@ -1,4 +1,6 @@
 # Django imports
+import time
+
 from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
@@ -42,14 +44,12 @@ def fetch_driver():
     # Setting up driver
     opts.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     opts.headless = True
-    # opts.add_argument("--headless")
+    opts.add_argument("--headless")
     opts.add_argument("--disable-dev-shm-usage")
     opts.add_argument("--no-sandbox")
-    my_driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=opts)
-
-    # driver_path = Service(f'{os.path.dirname(os.path.abspath("chromedriver.exe"))}\\chromedriver.exe')
-    # my_driver = webdriver.Chrome(ChromeDriverManager().install(), options=opts)
-    # my_driver = webdriver.Chrome(service=driver_path, options=opts)
+    print('I am here...')
+    print('os.environ.get("CHROMEDRIVER_PATH") :', os.environ.get("CHROMEDRIVER_PATH"))
+    my_driver = webdriver.Chrome(executable_path=r"C:\Users\Mayank\Gautam_GitHub\ProfileBaba\profile-baba scraper\ProfleBabaDataApi\chromedriver.exe", options=opts)
 
     return my_driver
 
@@ -102,7 +102,12 @@ def for_google(query, no_of_records):
     # Fetching all links
     links = soup.select('a.tHmfQe')
 
-    for i in links[:no_of_records]:
+    if len(links) < no_of_records:
+        fetch_rec = len(links)
+    else:
+        fetch_rec = no_of_records
+
+    for i in links[:fetch_rec]:
         link = base_url + i['href']
         r = session.get(link).html
 
@@ -219,7 +224,7 @@ def my_scraper(input_state, input_cat, input_add, input_record_google, input_rec
                  zip(urls, names, directions, near_areas, phones, ratings, reviews, categories, websites)]
 
     # Quit driver
-    driver.quit()
+    # driver.quit()
 
     return data_list
 
@@ -237,7 +242,7 @@ def snippet_list(request):
             print('request', request)
             data = my_scraper(state, cat, address, int(no_of_records_for_jd), int(no_of_records_for_google))
             print('data', data)
-            return Response(data)
+            return JsonResponse(data, safe=False)
         except Exception as e:
             status_code = 501
             message = "Internal Server Error"
