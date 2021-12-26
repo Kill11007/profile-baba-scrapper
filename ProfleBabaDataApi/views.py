@@ -174,35 +174,35 @@ def for_google(query, no_of_records=10):
 def for_just_dial(query, cat, no_of_records=10):
     global driver, session, header
 
-    r = session.get('https://www.justdial.com/' + query, headers=header)
+    r = session.get('https://www.justdial.com/')
     print('r.status_code :', r.status_code)
     print('r.text :', r.text)
-    store_details = r.html.find('div.store-details')
-    print('store_details :', len(store_details))
-    if len(store_details) < no_of_records:
-        fetch_rec = len(store_details)
-    else:
-        fetch_rec = no_of_records
-
-    # iterating the storeDetails
-    for i in store_details[:fetch_rec]:
-        url = i.find('span.jcn > a')[0].attrs['href']
-        name = i.find('span.jcn > a')[0].attrs['title'].split(" in")[0]
-        direction = i.find('span.cont_fl_addr')[0].text
-        rating = i.find('span.green-box')[0].text
-        review = i.find('p.newrtings > a > span.rt_count.lng_vote')[0].text.split(' ')[0]
-        contact_list = i.find('span.mobilesv')
-        phone = "".join([strings_to_num(j.attrs['class'][-1].split("-")[-1]) for j in contact_list])
-
-        urls.append(url)
-        names.append(name)
-        directions.append(direction)
-        phones.append(phone)
-        ratings.append(rating)
-        reviews.append(review)
-        near_areas.append('')
-        categories.append(cat)
-        websites.append('https://www.justdial.com/')
+    # store_details = r.html.find('div.store-details')
+    # print('store_details :', len(store_details))
+    # if len(store_details) < no_of_records:
+    #     fetch_rec = len(store_details)
+    # else:
+    #     fetch_rec = no_of_records
+    #
+    # # iterating the storeDetails
+    # for i in store_details[:fetch_rec]:
+    #     url = i.find('span.jcn > a')[0].attrs['href']
+    #     name = i.find('span.jcn > a')[0].attrs['title'].split(" in")[0]
+    #     direction = i.find('span.cont_fl_addr')[0].text
+    #     rating = i.find('span.green-box')[0].text
+    #     review = i.find('p.newrtings > a > span.rt_count.lng_vote')[0].text.split(' ')[0]
+    #     contact_list = i.find('span.mobilesv')
+    #     phone = "".join([strings_to_num(j.attrs['class'][-1].split("-")[-1]) for j in contact_list])
+    #
+    #     urls.append(url)
+    #     names.append(name)
+    #     directions.append(direction)
+    #     phones.append(phone)
+    #     ratings.append(rating)
+    #     reviews.append(review)
+    #     near_areas.append('')
+    #     categories.append(cat)
+    #     websites.append('https://www.justdial.com/')
 
     return
 
