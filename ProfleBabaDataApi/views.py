@@ -57,6 +57,7 @@ header = {
     'accept-encoding': 'gzip, deflate, br',
     'accept-language': 'en-US,en;q=0.9',
     'cache-control': 'max-age=0',
+    'cookie': 'ppc=; ppc=; _ctok=3a5b4b0786bc93bc313b6c59051b4a1170107d89d12a9f2e37a8bdd9e0057afe; _ga=GA1.2.2009095260.1638019562; _fbp=fb.1.1638019561638.450925677; vfdisp=%7B%22011PXX11.XX11.190131111444.J3V2%22%3A%221024%22%7D; TKY=008ade917391af8a466c4a4ec56fc20d6d5673aca5606f1ec1792e325886542e; akcty=Delhi; attn_user=logout; bm_sz=AD15D3C4A0CE0B6173ECB71C4E27013A~YAAQJCEPFyspmfB9AQAAl4c99g4fVDHcf133JKL7qacaNXp2D42j43oqK1awV1yj3EVRYhjAbP6uHr1PIy6SwfK6AgCfCBlMh55pVEqcabJzVxTlGNlrj9aAaA274U9JYmpQnaLsjii0Tid7ouFpkYGkTL7u9hMwqAwB++MRyj+TOSBW4oYE84SVuj/47hiFp/MR/URzFHSwpvRZ8NcdHWe+KycNUQn8hYRnk7OsP/CoKUGys5txnCU9cPISfrKWmtAOfRB4q//GJTxbb3DsNjx20WVGfUf8YqnfT7hszJR0NlL5zA==~3293747~4473155; _gid=GA1.2.1924151018.1640513767; ak_bmsc=BD5D54AB78186A1DFEA979946205CCF2~000000000000000000000000000000~YAAQJCEPF1QpmfB9AQAAYIs99g5yy/WQntJ3kIVQFUdQLzLt2lUj5FPJb9Usblx9fZdgNmfwxVuWSagn7zn3vsHrvPMAGQe2xWRuzH1ugoAGR13rxyhAQPnaezHaMu+8yBU/Z/F/kQMCs04cfet4QBT8YqUTrychHadJDc6cf6CePSXZehc3ObDBxefbZZ9lBxe9ErNU61G80MuFjx6iTjmhFJ+NV2yivn/FnN3+m5jE+zqWcR7dLUpl6dWxO0z4zTDef1F//67nclkhyecABRvzg3lrBkEpr9RIY7rMcyFcfQE/ga6pFllWJ9hWdb9MBCyq4jBwdj1Suz19XS5Wfd6u1YcTLpyI5uGkqjUcVx/RCwhPdYWwPuDqnv/iWH8SRiK0bq8DNNJCpZP9nITJ8uE6uQ3ASK9er1R9WEdcCoORaLRBW4rkmCVKPiGZKjtRVKkwjaGFUOmlMUZaLXOstT/aqJAEjqsbA96zBejRjxlSKwHitHyH1nChjI6k; usrcity=Mumbai; inweb_city=Delhi; scity=Delhi; dealBackCity=Delhi; main_city=Delhi; search_area=110043; inweb_what=Painters; profbd=0; bdcheck=1; tab=toprs; bd_inputs=2|4|House%20Painters; view=lst_v; detailmodule=011PXX11.XX11.180424202216.U7L8; showrtp=2%232021-12-26; docidarray=%7B%22011PXX11.XX11.210905190005.J3T6%22%3A%222021-12-26%22%2C%22011PXX11.XX11.180424202216.U7L8%22%3A%222021-12-26%22%7D; _abck=A6A56EBC4BCC6A1F862C743A8500A281~0~YAAQJCEPF0YxmfB9AQAAWjY+9gd3l+7Bzn5OUzJLxYi3HX2DI0fhimH1jTamDnTvnDajS31St6JYhaJ1E3BIwejOASNmKJVFwh98npPs9DYy+zMBqQ6L948l/g6HG9dZojL4UDYZhAevYZ1XqyaGet5udR9OYNy51fiDeXM6a0BhGyK+2RXSas4NSH5HLz677eCeMr+PRV7PAPjkIuUAuvq596R3Oe8WhvkFUI+11nw2us2XwGANbETBAhnz3G79JTnLcPeIVJp7mW+mCefBMY328GfzrmvUpVNb6zw6eX6/M0KaBMxbXStNwo1WiBjczuPjDJld8c6fEbKUhP4dYx2tFGaov+K5u8u1A9RmX2Yw7pTLAJlhNZZUsQr6wbRgx59misCEaO23EHuXd8l8svtOVgk5baOzIYs=~-1~-1~-1; prevcatid=11017366; BDprofile=1; AKA_A2=A; jdccp=1; Continent=AS; ppc=; _gat=1; _gat_UA-1220997-15=1; pincode=110075; sarea=Dwarka; PHPSESSID=53v9hi1nqdvmvtbrh6d5666jd7; _gat_category=1; bm_sv=1329A9B5366072CCE6D0EE0CCBBB939B~XFZVd/jMgT7bFWUMFmQm+TRWlC1SWBLtsKYTYV2eA0jaKmKVMsLIrnAji/WH9H6EAFqYgj/KENzwQpjgVrQRH0gUoPYv1HQaTXcsXVhEwQxpzccyrA/gYa6Yu5aq4VaowajbiuB/jILO36dhdB8wGCB6/AxlNr11pyErLW74ETI=; RT="z=1&dm=justdial.com&si=8007e297-9433-4567-b025-8f25ca169d28&ss=kxn7qgdm&sl=2&tt=gc&rl=1&obo=1&ld=t33&r=54nmf53m&ul=t34"',
     'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="96", "Google Chrome";v="96"',
     'sec-ch-ua-mobile': '?0',
     'sec-ch-ua-platform': 'Windows',
@@ -64,7 +65,8 @@ header = {
     'sec-fetch-mode': 'navigate',
     'sec-fetch-site': 'none',
     'sec-fetch-user': '?1',
-    'upgrade-insecure-requests': '1'
+    'upgrade-insecure-requests': '1',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'
 }
 
 # my_dict for df
@@ -184,41 +186,36 @@ def for_google(query, no_of_records=10):
 
 def for_just_dial(query, cat, no_of_records=10):
     global driver, session, header
-    driver.get('https://www.justdial.com/')
 
-    # select all links through soup
-    soup = BeautifulSoup(driver.page_source, 'lxml')
-    print('soup :', soup)
+    r = session.get('https://www.justdial.com/' + query, headers=header)
+    print('r.status_code :', r.status_code)
+    print('r.text :', r.text)
+    store_details = r.html.find('div.store-details')
+    print('store_details :', len(store_details))
+    if len(store_details) < no_of_records:
+        fetch_rec = len(store_details)
+    else:
+        fetch_rec = no_of_records
 
-    # r = session.get('https://www.justdial.com/' + query, headers=header)
-    # print('r.status_code :', r.status_code)
-    # print('r.text :', r.text)
-    # store_details = r.html.find('div.store-details')
-    # print('store_details :', len(store_details))
-    # if len(store_details) < no_of_records:
-    #     fetch_rec = len(store_details)
-    # else:
-    #     fetch_rec = no_of_records
+    # iterating the storeDetails
+    for i in store_details[:fetch_rec]:
+        url = i.find('span.jcn > a')[0].attrs['href']
+        name = i.find('span.jcn > a')[0].attrs['title'].split(" in")[0]
+        direction = i.find('span.cont_fl_addr')[0].text
+        rating = i.find('span.green-box')[0].text
+        review = i.find('p.newrtings > a > span.rt_count.lng_vote')[0].text.split(' ')[0]
+        contact_list = i.find('span.mobilesv')
+        phone = "".join([strings_to_num(j.attrs['class'][-1].split("-")[-1]) for j in contact_list])
 
-    # # iterating the storeDetails
-    # for i in store_details[:fetch_rec]:
-    #     url = i.find('span.jcn > a')[0].attrs['href']
-    #     name = i.find('span.jcn > a')[0].attrs['title'].split(" in")[0]
-    #     direction = i.find('span.cont_fl_addr')[0].text
-    #     rating = i.find('span.green-box')[0].text
-    #     review = i.find('p.newrtings > a > span.rt_count.lng_vote')[0].text.split(' ')[0]
-    #     contact_list = i.find('span.mobilesv')
-    #     phone = "".join([strings_to_num(j.attrs['class'][-1].split("-")[-1]) for j in contact_list])
-    #
-    #     urls.append(url)
-    #     names.append(name)
-    #     directions.append(direction)
-    #     phones.append(phone)
-    #     ratings.append(rating)
-    #     reviews.append(review)
-    #     near_areas.append('')
-    #     categories.append(cat)
-    #     websites.append('https://www.justdial.com/')
+        urls.append(url)
+        names.append(name)
+        directions.append(direction)
+        phones.append(phone)
+        ratings.append(rating)
+        reviews.append(review)
+        near_areas.append('')
+        categories.append(cat)
+        websites.append('https://www.justdial.com/')
 
     return
 
