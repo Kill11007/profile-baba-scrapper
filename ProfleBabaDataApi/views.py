@@ -53,7 +53,8 @@ driver = fetch_driver()
 
 # Headers for just Dial
 header = {
-    'cookie': 'ppc=; ppc=; _ctok=3a5b4b0786bc93bc313b6c59051b4a1170107d89d12a9f2e37a8bdd9e0057afe; _ga=GA1.2.2009095260.1638019562; _fbp=fb.1.1638019561638.450925677; vfdisp=%7B%22011PXX11.XX11.190131111444.J3V2%22%3A%221024%22%7D; TKY=008ade917391af8a466c4a4ec56fc20d6d5673aca5606f1ec1792e325886542e; akcty=Delhi; attn_user=logout; bm_sz=AD15D3C4A0CE0B6173ECB71C4E27013A~YAAQJCEPFyspmfB9AQAAl4c99g4fVDHcf133JKL7qacaNXp2D42j43oqK1awV1yj3EVRYhjAbP6uHr1PIy6SwfK6AgCfCBlMh55pVEqcabJzVxTlGNlrj9aAaA274U9JYmpQnaLsjii0Tid7ouFpkYGkTL7u9hMwqAwB++MRyj+TOSBW4oYE84SVuj/47hiFp/MR/URzFHSwpvRZ8NcdHWe+KycNUQn8hYRnk7OsP/CoKUGys5txnCU9cPISfrKWmtAOfRB4q//GJTxbb3DsNjx20WVGfUf8YqnfT7hszJR0NlL5zA==~3293747~4473155; _gid=GA1.2.1924151018.1640513767; ak_bmsc=BD5D54AB78186A1DFEA979946205CCF2~000000000000000000000000000000~YAAQJCEPF1QpmfB9AQAAYIs99g5yy/WQntJ3kIVQFUdQLzLt2lUj5FPJb9Usblx9fZdgNmfwxVuWSagn7zn3vsHrvPMAGQe2xWRuzH1ugoAGR13rxyhAQPnaezHaMu+8yBU/Z/F/kQMCs04cfet4QBT8YqUTrychHadJDc6cf6CePSXZehc3ObDBxefbZZ9lBxe9ErNU61G80MuFjx6iTjmhFJ+NV2yivn/FnN3+m5jE+zqWcR7dLUpl6dWxO0z4zTDef1F//67nclkhyecABRvzg3lrBkEpr9RIY7rMcyFcfQE/ga6pFllWJ9hWdb9MBCyq4jBwdj1Suz19XS5Wfd6u1YcTLpyI5uGkqjUcVx/RCwhPdYWwPuDqnv/iWH8SRiK0bq8DNNJCpZP9nITJ8uE6uQ3ASK9er1R9WEdcCoORaLRBW4rkmCVKPiGZKjtRVKkwjaGFUOmlMUZaLXOstT/aqJAEjqsbA96zBejRjxlSKwHitHyH1nChjI6k; usrcity=Mumbai; inweb_city=Delhi; scity=Delhi; dealBackCity=Delhi; main_city=Delhi; search_area=110043; inweb_what=Painters; profbd=0; bdcheck=1; tab=toprs; bd_inputs=2|4|House%20Painters; view=lst_v; detailmodule=011PXX11.XX11.180424202216.U7L8; showrtp=2%232021-12-26; docidarray=%7B%22011PXX11.XX11.210905190005.J3T6%22%3A%222021-12-26%22%2C%22011PXX11.XX11.180424202216.U7L8%22%3A%222021-12-26%22%7D; _abck=A6A56EBC4BCC6A1F862C743A8500A281~0~YAAQJCEPF0YxmfB9AQAAWjY+9gd3l+7Bzn5OUzJLxYi3HX2DI0fhimH1jTamDnTvnDajS31St6JYhaJ1E3BIwejOASNmKJVFwh98npPs9DYy+zMBqQ6L948l/g6HG9dZojL4UDYZhAevYZ1XqyaGet5udR9OYNy51fiDeXM6a0BhGyK+2RXSas4NSH5HLz677eCeMr+PRV7PAPjkIuUAuvq596R3Oe8WhvkFUI+11nw2us2XwGANbETBAhnz3G79JTnLcPeIVJp7mW+mCefBMY328GfzrmvUpVNb6zw6eX6/M0KaBMxbXStNwo1WiBjczuPjDJld8c6fEbKUhP4dYx2tFGaov+K5u8u1A9RmX2Yw7pTLAJlhNZZUsQr6wbRgx59misCEaO23EHuXd8l8svtOVgk5baOzIYs=~-1~-1~-1; prevcatid=11017366; BDprofile=1; AKA_A2=A; jdccp=1; Continent=AS; ppc=; _gat=1; _gat_UA-1220997-15=1; pincode=110075; sarea=Dwarka; PHPSESSID=53v9hi1nqdvmvtbrh6d5666jd7; _gat_category=1; bm_sv=1329A9B5366072CCE6D0EE0CCBBB939B~XFZVd/jMgT7bFWUMFmQm+TRWlC1SWBLtsKYTYV2eA0jaKmKVMsLIrnAji/WH9H6EAFqYgj/KENzwQpjgVrQRH0gUoPYv1HQaTXcsXVhEwQxpzccyrA/gYa6Yu5aq4VaowajbiuB/jILO36dhdB8wGCB6/AxlNr11pyErLW74ETI=; RT="z=1&dm=justdial.com&si=8007e297-9433-4567-b025-8f25ca169d28&ss=kxn7qgdm&sl=2&tt=gc&rl=1&obo=1&ld=t33&r=54nmf53m&ul=t34"'
+    'Accept': '*/*',
+    'cookie': 'TKY=6d4cda7ba15ba5ded3176c33b61267b4e82d50aad34b56ab3c7ba470e443c912; _abck=B2BD03FA2A626FBFD5697984DC832F40~-1~YAAQPUo5FwlCG+R9AQAA9lnq9geVWqK74XLky4hwTe0kHAZJDMkmXfQbWqXPV8lu1R1myaq5h74j6ZlUIYLFc3YbZbGfMajfZQoYsHmly0K3CH1RUiPpUCNl1b0Anm7BWgsXEZ+Gr/8qnV7LQqxZU9i8Vf0w5pPGKVCCkDTrqAxyOHsviYGGFU3Y4CDf5odsfsgbPOpXh4iBvEuPf1n5f0NRH8ypEFkWo+6hm4TUhpnMMSoQZcYN7/T167N0T6DTf0bWGcZqDrdz2ucY3zxXIMRf8ZX2U4a7ZL4VfqEBgFEhV1Y4VZnWwfWzYraokFILpN46+jIw4O3QEOHLPr38200vDHRrrXgTyncTYkv8ri8R38d9VlJC6O13agbkszUjKnKDcJluBKYBwMED~-1~-1~-1; _ctok=c0db6a9cb1a43b0b9a9ec5ffb88cdd49dc6235a77543330e5775afbc85d4943d; ak_bmsc=A5352C50CF860DD0B7C4226E5D089EE2~000000000000000000000000000000~YAAQLCEPF8ze8rd9AQAAJxjy9g5GtdYPipN3vJAWrXQ+3TqKoHN02j3j7zrhoqjubv/2BOUfdCaAhv2oW0q4VTNSfO05KkPbom0V5SO0KVPqEjI9bkpdUwgzGzyGOmK/+dF4LftTylJrG1MlqnDoDe0QoQ7zV8k6emRRx+3q0dfb1K6BW5bG1t/Iv+dY9dc5d1uonqUKXhWHtgsZOHMI+ielQxXQShiTp0WkfVDvt+PT2jS+ccQfSrPgePhN3nfPcuk3uLsnJjTqiNskDUFxfDnOnE8Y4NxBOY5fTtlJS8WDgZyWtzULdpKlGqO9rGZOwMUCZrKcsYhzgB07+wP6lfMdk6vlOUftDBnolj49JWmVlNoJbngpm5UDEyhvHdGAdTvwF+Ah+mQ2QddspwJvnCzTQerRh6JdeQ==; attn_user=logout; bm_mi=17863342B120E586ABC3FF83B6D0D933~7YGDThQe7Q8fq1WwBYjtPk27myCE96uXDvCM5kKxFW3QB5kTy2LHxOhkaciuGqrRcCKz6Zbhq9d/9m3kHtMCe6WejCT5x6A1SS2ugIJpcbbFyXAOR+svBAMsNyb79rPzKT8+rym9rFQenqH0EowfZMrJYpB4Vc9km1HZb4taNlw7P4QMal3mZb1Cw9vmZMt8F9mHWVbmiC38dVYO4cLg3NVTd5GTRwWlrb8Q4hlCYzk=; bm_sv=11DA979D7A0439D4C1268DA4FF7A3ADB~ezlXBQMhZps13vd0CuMdHPjpJagQdL9wwdH/JKK2TzSN5gU3rH6gNGfGRLYIHQXSYxSZmIIKbuaCt/N7MTeYycDxnoyVJruJOjpWx8qux34QC+n0OM8ZBv/x6BmP59im7Yd6HSyGj9z6xv5J+KPKQyQVnQ3+Y3XKQQxOAA91KOE=; bm_sz=C7FABE25C38754C832DF489AD7B1BA14~YAAQPUo5FwtCG+R9AQAA9lnq9g4QbALqk67Ir2oHKq2RidfEfp6BfcMYtrDDLNrRF+cvXsPtu3QAFbI8ontMNC7tLkpHoAgg/TfRQ5DqZyx6CX29TALl/1Rz9JXjApbGkzx2dBy/VoxfNSCqREjv5PFKNJiXr2lFmQ88Sg8/6VDnvSaQQCysqAL9mp64rSoEjikjzJC22eNCflPlHlwAJSRYc57ZusMkSl4EZdk1uBWoJ+xd818Sm06GPErQDmb+tu0YFEtUOUizGv9vhglf8xdv2qOCp/TtmVbHdyAZKJsBOiLWDw==~4601668~4470324; main_city=Mumbai; ppc=; Continent=AS; PHPSESSID=kjbj83ljbnc1nfh86bis6j8qf7'
 }
 
 # my_dict for df
@@ -89,14 +90,17 @@ def for_google(query, no_of_records=10):
 
     driver.find_element(By.CSS_SELECTOR, 'input[name="q"]').send_keys(query)
 
-    driver.find_element(By.CSS_SELECTOR, 'span.mugnXc.Q0cixc').click()
+    try:
+        driver.find_element(By.CSS_SELECTOR, 'span.mugnXc.Q0cixc').click()
+    except:
+        driver.find_element(By.CSS_SELECTOR, 'span.wUrVib.OSrXXb').click()
 
     # select all links through soup
     soup = BeautifulSoup(driver.page_source, 'lxml')
 
     # Fetching all links
     links = soup.select('a.tHmfQe')
-
+    return
     if len(links) < no_of_records:
         fetch_rec = len(links)
     else:
@@ -174,35 +178,38 @@ def for_google(query, no_of_records=10):
 def for_just_dial(query, cat, no_of_records=10):
     global driver, session, header
 
-    r = session.get('https://www.justdial.com/')
+    r = session.get('https://www.justdial.com/' + query, headers=header)
+
     print('r.status_code :', r.status_code)
     print('r.text :', r.text)
-    # store_details = r.html.find('div.store-details')
-    # print('store_details :', len(store_details))
-    # if len(store_details) < no_of_records:
-    #     fetch_rec = len(store_details)
-    # else:
-    #     fetch_rec = no_of_records
-    #
-    # # iterating the storeDetails
-    # for i in store_details[:fetch_rec]:
-    #     url = i.find('span.jcn > a')[0].attrs['href']
-    #     name = i.find('span.jcn > a')[0].attrs['title'].split(" in")[0]
-    #     direction = i.find('span.cont_fl_addr')[0].text
-    #     rating = i.find('span.green-box')[0].text
-    #     review = i.find('p.newrtings > a > span.rt_count.lng_vote')[0].text.split(' ')[0]
-    #     contact_list = i.find('span.mobilesv')
-    #     phone = "".join([strings_to_num(j.attrs['class'][-1].split("-")[-1]) for j in contact_list])
-    #
-    #     urls.append(url)
-    #     names.append(name)
-    #     directions.append(direction)
-    #     phones.append(phone)
-    #     ratings.append(rating)
-    #     reviews.append(review)
-    #     near_areas.append('')
-    #     categories.append(cat)
-    #     websites.append('https://www.justdial.com/')
+
+    store_details = r.html.find('div.store-details')
+    print('store_details :', len(store_details))
+
+    if len(store_details) < no_of_records:
+        fetch_rec = len(store_details)
+    else:
+        fetch_rec = no_of_records
+
+    # iterating the storeDetails
+    for i in store_details[:fetch_rec]:
+        url = i.find('span.jcn > a')[0].attrs['href']
+        name = i.find('span.jcn > a')[0].attrs['title'].split(" in")[0]
+        direction = i.find('span.cont_fl_addr')[0].text
+        rating = i.find('span.green-box')[0].text
+        review = i.find('p.newrtings > a > span.rt_count.lng_vote')[0].text.split(' ')[0]
+        contact_list = i.find('span.mobilesv')
+        phone = "".join([strings_to_num(j.attrs['class'][-1].split("-")[-1]) for j in contact_list])
+
+        urls.append(url)
+        names.append(name)
+        directions.append(direction)
+        phones.append(phone)
+        ratings.append(rating)
+        reviews.append(review)
+        near_areas.append('')
+        categories.append(cat)
+        websites.append('https://www.justdial.com/')
 
     return
 
