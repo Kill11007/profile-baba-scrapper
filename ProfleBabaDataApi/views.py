@@ -184,7 +184,7 @@ def for_google(query, no_of_records=10):
 
 def for_just_dial(query, cat, no_of_records=10):
     global driver, session, header
-    driver.get('https://www.justdial.com/' + query)
+    driver.get('https://www.justdial.com/')
 
     # select all links through soup
     soup = BeautifulSoup(driver.page_source, 'lxml')
