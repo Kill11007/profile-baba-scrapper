@@ -180,7 +180,7 @@ def for_google(query, no_of_records=10):
 def for_just_dial(query, cat, no_of_records=10):
     global driver, session, header, proxy
     prox = '52.183.8.192:3128'
-    my_proxy = {'http': f'https://{prox}'}
+    my_proxy = {'https': f'https://{prox}'}
     full_url = 'https://www.justdial.com/' + query
     print('full_url :', full_url)
     print('my_proxy :', my_proxy)
