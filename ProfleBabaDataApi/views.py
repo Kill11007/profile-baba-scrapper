@@ -33,7 +33,7 @@ def fetch_driver():
     opts = Options()
     user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) ' \
                  'Chrome/96.0.4664.110 Safari/537.36'
-    opts.add_argument("user-agent=user_agent")
+    opts.add_argument("user-agent=" + user_agent)
 
     # Setting up driver through env variable
     opts.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
