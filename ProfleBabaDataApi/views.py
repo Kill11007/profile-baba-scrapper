@@ -32,12 +32,10 @@ def fetch_driver():
     # To add user-agent---------------------------------------------------
     opts = Options()
     user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) ' \
-                 'Chrome/74.0.3729.169 Safari/537.36'
+                 'Chrome/96.0.4664.110 Safari/537.36'
     opts.add_argument("user-agent=user_agent")
 
-    # Setting headless browser
-
-    # Setting up driver
+    # Setting up driver through env variable
     opts.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     opts.headless = True
     opts.add_argument("--disable-dev-shm-usage")
@@ -54,7 +52,7 @@ try:
     # Getting driver
     driver = fetch_driver()
 except Exception as e:
-    print('error in driver :', e)
+    print('error in initialising driver or session :', e)
 
 # my_dict for df
 urls, names, directions, near_areas, phones, ratings, reviews, categories, websites = [], [], [], [], [], [], [], [], []
@@ -81,7 +79,7 @@ def strings_to_num(argument):
     return switcher.get(argument, "")
 
 
-def for_google(query, no_of_records):
+def for_google(query, no_of_records=10):
     base_url = 'https://www.google.com'
     driver.get(base_url)
 
@@ -169,8 +167,11 @@ def for_google(query, no_of_records):
     return
 
 
-def for_just_dial(query, cat, no_of_records):
-    store_details = session.get('https://www.justdial.com/' + query).html.find('div.store-details')
+def for_just_dial(query, cat, no_of_records=10):
+    r = session.get('https://www.justdial.com/' + query)
+    print('r.status_code :', r.status_code)
+    print('r.text :', r.text)
+    store_details = r.html.find('div.store-details')
     print('store_details :', len(store_details))
     if len(store_details) < no_of_records:
         fetch_rec = len(store_details)
@@ -200,7 +201,8 @@ def for_just_dial(query, cat, no_of_records):
     return
 
 
-def my_scraper(input_state, input_cat, input_add, input_record_google, input_record_justdial):
+def my_scraper(input_state, input_cat, input_add, input_record_google=10, input_record_justdial=10):
+    print('Inside MY_SCRAPER no_of_records_for_jd, no_of_records_for_google :', input_record_justdial, input_record_google)
     # Query to search
     query_google = f'{input_cat} in {input_add} {input_state} \n'
     query_jd = f'{input_state}/{input_cat}-in-{input_add}'.replace(' ', '-')
@@ -232,6 +234,7 @@ def snippet_list(request):
             address = query['address']
             no_of_records_for_jd = query['nr_jd']
             no_of_records_for_google = query['nr_google']
+            print('no_of_records_for_jd, no_of_records_for_google :', no_of_records_for_jd, no_of_records_for_google)
             data = my_scraper(state, cat, address, int(no_of_records_for_jd), int(no_of_records_for_google))
             print('data', data)
             return JsonResponse(data, safe=False)
