@@ -45,14 +45,28 @@ def fetch_driver():
     return my_driver
 
 
-try:
-    # session for requests
-    session = HTMLSession()
+# session for requests
+session = HTMLSession()
 
-    # Getting driver
-    driver = fetch_driver()
-except Exception as e:
-    print('error in initialising driver or session :', e)
+# Getting driver
+driver = fetch_driver()
+
+# Headers for just Dial
+header = {
+    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'accept-encoding': 'gzip, deflate, br',
+    'accept-language': 'en-US,en;q=0.9',
+    'cache-control': 'max-age=0',
+    'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="96", "Google Chrome";v="96"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': 'Windows',
+    'sec-fetch-dest': 'document',
+    'sec-fetch-mode': 'navigate',
+    'sec-fetch-site': 'none',
+    'sec-fetch-user': '?1',
+    'upgrade-insecure-requests': '1',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'
+}
 
 # my_dict for df
 urls, names, directions, near_areas, phones, ratings, reviews, categories, websites = [], [], [], [], [], [], [], [], []
@@ -80,6 +94,8 @@ def strings_to_num(argument):
 
 
 def for_google(query, no_of_records=10):
+    global driver, session
+
     base_url = 'https://www.google.com'
     driver.get(base_url)
 
@@ -168,7 +184,9 @@ def for_google(query, no_of_records=10):
 
 
 def for_just_dial(query, cat, no_of_records=10):
-    r = session.get('https://www.justdial.com/' + query)
+    global driver, session, header
+
+    r = session.get('https://www.justdial.com/' + query, headers=header)
     print('r.status_code :', r.status_code)
     print('r.text :', r.text)
     store_details = r.html.find('div.store-details')
@@ -201,8 +219,7 @@ def for_just_dial(query, cat, no_of_records=10):
     return
 
 
-def my_scraper(input_state, input_cat, input_add, input_record_google=10, input_record_justdial=10):
-    print('Inside MY_SCRAPER no_of_records_for_jd, no_of_records_for_google :', input_record_justdial, input_record_google)
+def my_scraper(input_state, input_cat, input_add, input_record_google, input_record_justdial):
     # Query to search
     query_google = f'{input_cat} in {input_add} {input_state} \n'
     query_jd = f'{input_state}/{input_cat}-in-{input_add}'.replace(' ', '-')
@@ -218,9 +235,6 @@ def my_scraper(input_state, input_cat, input_add, input_record_google=10, input_
                  for url, name, direction, near_area, phone, rating, review, category, website in
                  zip(urls, names, directions, near_areas, phones, ratings, reviews, categories, websites)]
 
-    # Quit driver
-    # driver.quit()
-
     return data_list
 
 
@@ -232,9 +246,8 @@ def snippet_list(request):
             state = query['state']
             cat = query['cat']
             address = query['address']
-            no_of_records_for_jd = query['nr_jd']
-            no_of_records_for_google = query['nr_google']
-            print('no_of_records_for_jd, no_of_records_for_google :', no_of_records_for_jd, no_of_records_for_google)
+            no_of_records_for_jd = query['nr_jd'] if 'nr_jd' in query.keys() else 10
+            no_of_records_for_google = query['nr_google'] if 'nr_google' in query.keys() else 10
             data = my_scraper(state, cat, address, int(no_of_records_for_jd), int(no_of_records_for_google))
             print('data', data)
             return JsonResponse(data, safe=False)
