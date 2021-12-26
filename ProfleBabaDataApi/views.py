@@ -12,16 +12,17 @@ import requests
 from bs4 import BeautifulSoup
 from requests_html import HTMLSession
 
+# For proxy list of India from (https://docs.proxyscrape.com)
+proxy_url = r'https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=' \
+            r'US&ssl=all&anonymity=all'
+proxies = requests.get(proxy_url).text.split('\r\n')[:-1]
+
 
 def fetch_driver():
-
-    # For proxy list of India from (https://docs.proxyscrape.com)
-    proxy_url = r'https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=' \
-                r'US&ssl=all&anonymity=all'
-    proxies = requests.get(proxy_url).text.split('\r\n')[:-1]
+    global proxies
+    proxy = random.choice(proxies)
 
     # Setting proxy settings
-    proxy = random.choice(proxies)
     webdriver.DesiredCapabilities.FIREFOX['proxy'] = {
         "httpProxy": proxy,
         "ftpProxy": proxy,
@@ -47,6 +48,7 @@ def fetch_driver():
 
 # session for requests
 session = HTMLSession()
+proxy = random.choice(proxies)
 
 # Getting driver
 driver = fetch_driver()
@@ -176,9 +178,13 @@ def for_google(query, no_of_records=10):
 
 
 def for_just_dial(query, cat, no_of_records=10):
-    global driver, session, header
-
-    r = session.get('https://www.justdial.com/' + query, headers=header)
+    global driver, session, header, proxy
+    prox = '206.125.41.142:443'
+    my_proxy = {'http': f'https://{prox}'}
+    full_url = 'https://www.justdial.com/' + query
+    print('full_url :', full_url)
+    print('my_proxy :', my_proxy)
+    r = session.request(method='GET', url=full_url, headers=header, proxies=my_proxy, verify=False)
 
     print('r.status_code :', r.status_code)
     print('r.text :', r.text)
