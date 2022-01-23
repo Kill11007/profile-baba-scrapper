@@ -58,7 +58,7 @@ header = {
 }
 
 # my_dict for df
-urls, names, directions, near_areas, phones, ratings, reviews, categories, websites = [], [], [], [], [], [], [], [], []
+# urls, names, directions, near_areas, phones, ratings, reviews, categories, websites = [], [], [], [], [], [], [], [], []
 
 
 # For phone no's
@@ -119,13 +119,16 @@ def for_google(query, no_of_records=10):
     else:
         records = records[:no_of_records].copy()
 
+    print('len of records :', len(records))
     # Looping over records
-    for index, i in enumerate(records):
+    for i in records:
         try:
             link = base_url + i['href']
             r = session.get(link).html
+            print('session.................')
         except:
             r = soup
+            print('selenium................')
 
         # Name
         try:
