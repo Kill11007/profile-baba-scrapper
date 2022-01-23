@@ -118,7 +118,6 @@ def for_google(query, no_of_records=10):
 
     # Looping over records
     for index, i in enumerate(records[:fetch_rec]):
-        time.sleep(1.1)
         try:
             link = base_url + i['href']
             r = session.get(link).html
@@ -131,6 +130,7 @@ def for_google(query, no_of_records=10):
         except:
             try:
                 driver.execute_script("arguments[0].click();", i)
+                time.sleep(1.1)
                 name = driver.find_elements(By.CSS_SELECTOR, 'h2.qrShPb')[0].text
             except:
                 name = ''
@@ -290,7 +290,7 @@ def snippet_list(request):
     if request.method == 'GET':
         try:
             query = request.query_params
-            state = query['state']
+            state = query['state'] if 'state' in query.keys() else ''
             cat = query['cat']
             address = query['address']
             no_of_records_for_jd = query['nr_jd'] if 'nr_jd' in query.keys() else 10
