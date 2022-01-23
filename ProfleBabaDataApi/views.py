@@ -113,12 +113,12 @@ def for_google(query, no_of_records=10):
 
     # Only select no of records given
     if len(records) < no_of_records:
-        fetch_rec = len(records)
+        records = records[:len(records)].copy()
     else:
-        fetch_rec = no_of_records
+        records = records[:no_of_records].copy()
 
     # Looping over records
-    for index, i in enumerate(records[:fetch_rec]):
+    for index, i in enumerate(records):
         try:
             link = base_url + i['href']
             r = session.get(link).html
@@ -296,7 +296,7 @@ def snippet_list(request):
             address = query['address']
             no_of_records_for_jd = query['nr_jd'] if 'nr_jd' in query.keys() else 10
             no_of_records_for_google = query['nr_google'] if 'nr_google' in query.keys() else 10
-            data = my_scraper(state, cat, address, int(no_of_records_for_jd), int(no_of_records_for_google))
+            data = my_scraper(state, cat, address, int(no_of_records_for_google))
             print('data', data)
             # driver.quit()
             return JsonResponse(data, safe=False)
