@@ -1,4 +1,6 @@
 # Django imports
+import time
+
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 # Selenium imports
@@ -8,14 +10,16 @@ from selenium.webdriver.chrome.options import Options
 # Other imports
 import os
 import random
+import urllib3
 import requests
 from bs4 import BeautifulSoup
+from urllib3 import PoolManager
 from requests_html import HTMLSession
 
 # For proxy list of India from (https://docs.proxyscrape.com)
-proxy_url = r'https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=' \
-            r'US&ssl=all&anonymity=all'
+proxy_url = r'https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=US&ssl=all&anonymity=all'
 proxies = requests.get(proxy_url).text.split('\r\n')[:-1]
+proxy = random.choice(proxies)
 
 
 def fetch_driver():
@@ -32,23 +36,20 @@ def fetch_driver():
 
     # To add user-agent---------------------------------------------------
     opts = Options()
-    user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) ' \
-                 'Chrome/96.0.4664.110 Safari/537.36'
-    opts.add_argument("user-agent=" + user_agent)
-
     # Setting up driver through env variable
-    opts.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    # opts.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     opts.headless = True
-    opts.add_argument("--disable-dev-shm-usage")
-    opts.add_argument("--no-sandbox")
-    my_driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=opts)
+    opts.add_experimental_option('excludeSwitches', ['enable-logging'])
+    # opts.add_argument("--disable-dev-shm-usage")
+    # opts.add_argument("--no-sandbox")
+    # my_driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=opts)
+    my_driver = webdriver.Chrome(executable_path='./chromedriver.exe', options=opts)
 
     return my_driver
 
 
 # session for requests
 session = HTMLSession()
-proxy = random.choice(proxies)
 
 # Getting driver
 driver = fetch_driver()
@@ -86,12 +87,15 @@ def strings_to_num(argument):
 
 def for_google(query, no_of_records=10):
     global driver, session
+    print('inside this code...')
 
     base_url = 'https://www.google.com'
     driver.get(base_url)
 
+    # Google search box
     driver.find_element(By.CSS_SELECTOR, 'input[name="q"]').send_keys(query)
 
+    # Click on more items
     try:
         driver.find_element(By.CSS_SELECTOR, 'span.mugnXc.Q0cixc').click()
     except:
@@ -101,68 +105,102 @@ def for_google(query, no_of_records=10):
     soup = BeautifulSoup(driver.page_source, 'lxml')
 
     # Fetching all links
-    links = soup.select('a.tHmfQe')
-    return
-    if len(links) < no_of_records:
-        fetch_rec = len(links)
+    records = soup.select('a.tHmfQe')
+
+    if len(records) == 0:
+        records = driver.find_elements(By.CSS_SELECTOR, 'div.eDIkBe > span:nth-child(1)')
+
+    # Only select no of records given
+    if len(records) < no_of_records:
+        fetch_rec = len(records)
     else:
         fetch_rec = no_of_records
 
-    for i in links[:fetch_rec]:
-        link = base_url + i['href']
-        r = session.get(link).html
+    # Looping over records
+    for index, i in enumerate(records[:fetch_rec]):
+        time.sleep(1.1)
+        try:
+            link = base_url + i['href']
+            r = session.get(link).html
+        except:
+            r = soup
 
         # Name
         try:
             name = r.find('h2.qrShPb')[0].text
         except:
-            name = ''
+            try:
+                driver.execute_script("arguments[0].click();", i)
+                name = driver.find_elements(By.CSS_SELECTOR, 'h2.qrShPb')[0].text
+            except:
+                name = ''
 
         # Address
         try:
             direction = r.find('span.LrzXr')[0].text
         except:
-            direction = ''
+            try:
+                direction = driver.find_elements(By.CSS_SELECTOR, 'span.LrzXr')[0].text
+            except:
+                direction = ''
 
         # Phone
         try:
             phone = r.find('span.LrzXr.zdqRlf.kno-fv')[0].text.replace(' ', '')
         except:
-            phone = ''
+            try:
+                phone = driver.find_elements(By.CSS_SELECTOR, 'span.LrzXr.zdqRlf.kno-fv')[0].text
+            except:
+                phone = ''
 
         # Near Area
         try:
             near_area = r.find('a.V3h3K')[0].text
         except:
-            near_area = ''
+            try:
+                near_area = driver.find_elements(By.CSS_SELECTOR, 'a.V3h3K')[0].text
+            except:
+                near_area = ''
 
         # Rating
         try:
             rating = r.find('span.Aq14fc')[0].text
         except:
-            rating = ''
+            try:
+                rating = driver.find_elements(By.CSS_SELECTOR, 'span.Aq14fc')[0].text
+            except:
+                rating = ''
 
         # Reviews
         try:
             review = r.find('span.hqzQac > span > a > span')[0].text.split(' ')[0]
         except:
-            review = ''
+            try:
+                review = driver.find_elements(By.CSS_SELECTOR, 'span.hqzQac > span > a > span')[0].text.split(' ')[0]
+            except:
+                review = ''
 
         # Category
         try:
             category = r.find('span.YhemCb')[0].text
         except:
-            category = ''
+            try:
+                category = driver.find_elements(By.CSS_SELECTOR, 'span.YhemCb')[0].text
+            except:
+                category = ''
 
         # Website_link
         try:
             web_link = [i.attrs['href'] for i in r.find('div.QqG1Sd a.ab_button') if i.text == 'Website']
             if len(web_link) != 0:
                 web_link = web_link[0]
-            else:
-                web_link = link
         except:
-            web_link = link
+            try:
+                web_link = [i.get_attribute('href') for i in driver.find_elements(By.CSS_SELECTOR, 'div.QqG1Sd a.ab_button') if i.text == 'Website']
+                if len(web_link) != 0:
+                    web_link = web_link[0]
+            except:
+                web_link = ''
 
         websites.append(base_url)
         urls.append(web_link)
@@ -178,56 +216,64 @@ def for_google(query, no_of_records=10):
 
 
 def for_just_dial(query, cat, no_of_records=10):
-    global driver, session, header, proxy
-    prox = '52.183.8.192:3128'
-    my_proxy = {'https': f'https://{prox}'}
+    global driver, session, header, proxy, proxies
+    print('proxy :', proxy)
     full_url = 'https://www.justdial.com/' + query
-    print('full_url :', full_url)
-    print('my_proxy :', my_proxy)
-    r = session.request(method='GET', url=full_url, headers=header, proxies=my_proxy, verify=False)
+    # http = PoolManager()
+    # res = http.request('GET', full_url, headers=header, proxies=proxy)
+    proxy = urllib3.ProxyManager(f'https://{proxies[0]}/', maxsize=10)
+    res = proxy.request('GET', full_url, verify=False)
+    print(res.data)
 
-    print('r.status_code :', r.status_code)
-    print('r.text :', r.text)
-
-    store_details = r.html.find('div.store-details')
-    print('store_details :', len(store_details))
-
-    if len(store_details) < no_of_records:
-        fetch_rec = len(store_details)
-    else:
-        fetch_rec = no_of_records
-
-    # iterating the storeDetails
-    for i in store_details[:fetch_rec]:
-        url = i.find('span.jcn > a')[0].attrs['href']
-        name = i.find('span.jcn > a')[0].attrs['title'].split(" in")[0]
-        direction = i.find('span.cont_fl_addr')[0].text
-        rating = i.find('span.green-box')[0].text
-        review = i.find('p.newrtings > a > span.rt_count.lng_vote')[0].text.split(' ')[0]
-        contact_list = i.find('span.mobilesv')
-        phone = "".join([strings_to_num(j.attrs['class'][-1].split("-")[-1]) for j in contact_list])
-
-        urls.append(url)
-        names.append(name)
-        directions.append(direction)
-        phones.append(phone)
-        ratings.append(rating)
-        reviews.append(review)
-        near_areas.append('')
-        categories.append(cat)
-        websites.append('https://www.justdial.com/')
+    # prox = '52.183.8.192:3128'
+    # my_proxy = {'https': f'https://{prox}'}
+    # full_url = 'https://www.justdial.com/' + query
+    # print('full_url :', full_url)
+    # print('my_proxy :', my_proxy)
+    # r = session.request(method='GET', url=full_url, headers=header, proxies=my_proxy, verify=False)
+    #
+    # print('r.status_code :', r.status_code)
+    # print('r.text :', r.text)
+    #
+    # store_details = r.html.find('div.store-details')
+    # print('store_details :', len(store_details))
+    #
+    # if len(store_details) < no_of_records:
+    #     fetch_rec = len(store_details)
+    # else:
+    #     fetch_rec = no_of_records
+    #
+    # # iterating the storeDetails
+    # for i in store_details[:fetch_rec]:
+    #     url = i.find('span.jcn > a')[0].attrs['href']
+    #     name = i.find('span.jcn > a')[0].attrs['title'].split(" in")[0]
+    #     direction = i.find('span.cont_fl_addr')[0].text
+    #     rating = i.find('span.green-box')[0].text
+    #     review = i.find('p.newrtings > a > span.rt_count.lng_vote')[0].text.split(' ')[0]
+    #     contact_list = i.find('span.mobilesv')
+    #     phone = "".join([strings_to_num(j.attrs['class'][-1].split("-")[-1]) for j in contact_list])
+    #
+    #     urls.append(url)
+    #     names.append(name)
+    #     directions.append(direction)
+    #     phones.append(phone)
+    #     ratings.append(rating)
+    #     reviews.append(review)
+    #     near_areas.append('')
+    #     categories.append(cat)
+    #     websites.append('https://www.justdial.com/')
 
     return
 
 
-def my_scraper(input_state, input_cat, input_add, input_record_google, input_record_justdial):
+def my_scraper(input_state, input_cat, input_add, input_record_google=10, input_record_justdial=10):
     # Query to search
     query_google = f'{input_cat} in {input_add} {input_state} \n'
     query_jd = f'{input_state}/{input_cat}-in-{input_add}'.replace(' ', '-')
 
     # For JustDial
-    for_just_dial(query_jd, input_cat, input_record_justdial)
-
+    # for_just_dial(query_jd, input_cat, input_record_justdial)
+    print('going for google...')
     # For Google
     for_google(query_google, input_record_google)
 
