@@ -85,6 +85,8 @@ def strings_to_num(argument):
 def for_google(query, no_of_records=10):
     global driver
 
+    data_list = []
+
     # session for requests
     session = HTMLSession()
 
@@ -203,17 +205,19 @@ def for_google(query, no_of_records=10):
             except:
                 web_link = ''
 
-        websites.append(base_url)
-        urls.append(web_link)
-        names.append(name)
-        directions.append(direction)
-        phones.append(phone)
-        near_areas.append(near_area)
-        ratings.append(rating)
-        reviews.append(review)
-        categories.append(category)
+        # websites.append(base_url)
+        # urls.append(web_link)
+        # names.append(name)
+        # directions.append(direction)
+        # phones.append(phone)
+        # near_areas.append(near_area)
+        # ratings.append(rating)
+        # reviews.append(review)
+        # categories.append(category)
+        data_list.append({'url': web_link, 'name': name, 'address': direction, 'near_area': near_area, 'phone': phone,
+            'rating': rating, 'review': review, 'category': category, 'website': base_url})
 
-    return
+    return data_list
 
 
 # def for_just_dial(query, cat, no_of_records=10):
@@ -276,12 +280,12 @@ def my_scraper(input_state, input_cat, input_add, input_record_google=10, input_
     # for_just_dial(query_jd, input_cat, input_record_justdial)
     print('going for google...')
     # For Google
-    for_google(query_google, input_record_google)
+    data_list = for_google(query_google, input_record_google)
 
-    data_list = [{'url': url, 'name': name, 'address': direction, 'near_area': near_area, 'phone': phone,
-                  'rating': rating, 'review': review, 'category': category, 'website': website}
-                 for url, name, direction, near_area, phone, rating, review, category, website in
-                 zip(urls, names, directions, near_areas, phones, ratings, reviews, categories, websites)]
+    # data_list = [{'url': url, 'name': name, 'address': direction, 'near_area': near_area, 'phone': phone,
+    #               'rating': rating, 'review': review, 'category': category, 'website': website}
+    #              for url, name, direction, near_area, phone, rating, review, category, website in
+    #              zip(urls, names, directions, near_areas, phones, ratings, reviews, categories, websites)]
 
     return data_list
 
