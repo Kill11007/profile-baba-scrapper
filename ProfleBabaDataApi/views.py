@@ -48,10 +48,6 @@ def fetch_driver():
     return my_driver
 
 
-# session for requests
-session = HTMLSession()
-time.sleep(1.1)
-
 # Getting driver
 driver = fetch_driver()
 
@@ -87,7 +83,11 @@ def strings_to_num(argument):
 
 
 def for_google(query, no_of_records=10):
-    global driver, session
+    global driver
+
+    # session for requests
+    session = HTMLSession()
+
     print('inside this code...')
 
     base_url = 'https://www.google.com'
@@ -216,55 +216,55 @@ def for_google(query, no_of_records=10):
     return
 
 
-def for_just_dial(query, cat, no_of_records=10):
-    global driver, session, header, proxy, proxies
-    print('proxy :', proxy)
-    full_url = 'https://www.justdial.com/' + query
-    # http = PoolManager()
-    # res = http.request('GET', full_url, headers=header, proxies=proxy)
-    proxy = urllib3.ProxyManager(f'https://{proxies[0]}/', maxsize=10)
-    res = proxy.request('GET', full_url, verify=False)
-    print(res.data)
-
-    # prox = '52.183.8.192:3128'
-    # my_proxy = {'https': f'https://{prox}'}
-    # full_url = 'https://www.justdial.com/' + query
-    # print('full_url :', full_url)
-    # print('my_proxy :', my_proxy)
-    # r = session.request(method='GET', url=full_url, headers=header, proxies=my_proxy, verify=False)
-    #
-    # print('r.status_code :', r.status_code)
-    # print('r.text :', r.text)
-    #
-    # store_details = r.html.find('div.store-details')
-    # print('store_details :', len(store_details))
-    #
-    # if len(store_details) < no_of_records:
-    #     fetch_rec = len(store_details)
-    # else:
-    #     fetch_rec = no_of_records
-    #
-    # # iterating the storeDetails
-    # for i in store_details[:fetch_rec]:
-    #     url = i.find('span.jcn > a')[0].attrs['href']
-    #     name = i.find('span.jcn > a')[0].attrs['title'].split(" in")[0]
-    #     direction = i.find('span.cont_fl_addr')[0].text
-    #     rating = i.find('span.green-box')[0].text
-    #     review = i.find('p.newrtings > a > span.rt_count.lng_vote')[0].text.split(' ')[0]
-    #     contact_list = i.find('span.mobilesv')
-    #     phone = "".join([strings_to_num(j.attrs['class'][-1].split("-")[-1]) for j in contact_list])
-    #
-    #     urls.append(url)
-    #     names.append(name)
-    #     directions.append(direction)
-    #     phones.append(phone)
-    #     ratings.append(rating)
-    #     reviews.append(review)
-    #     near_areas.append('')
-    #     categories.append(cat)
-    #     websites.append('https://www.justdial.com/')
-
-    return
+# def for_just_dial(query, cat, no_of_records=10):
+#     global driver, session, header, proxy, proxies
+#     print('proxy :', proxy)
+#     full_url = 'https://www.justdial.com/' + query
+#     # http = PoolManager()
+#     # res = http.request('GET', full_url, headers=header, proxies=proxy)
+#     proxy = urllib3.ProxyManager(f'https://{proxies[0]}/', maxsize=10)
+#     res = proxy.request('GET', full_url, verify=False)
+#     print(res.data)
+#
+#     # prox = '52.183.8.192:3128'
+#     # my_proxy = {'https': f'https://{prox}'}
+#     # full_url = 'https://www.justdial.com/' + query
+#     # print('full_url :', full_url)
+#     # print('my_proxy :', my_proxy)
+#     # r = session.request(method='GET', url=full_url, headers=header, proxies=my_proxy, verify=False)
+#     #
+#     # print('r.status_code :', r.status_code)
+#     # print('r.text :', r.text)
+#     #
+#     # store_details = r.html.find('div.store-details')
+#     # print('store_details :', len(store_details))
+#     #
+#     # if len(store_details) < no_of_records:
+#     #     fetch_rec = len(store_details)
+#     # else:
+#     #     fetch_rec = no_of_records
+#     #
+#     # # iterating the storeDetails
+#     # for i in store_details[:fetch_rec]:
+#     #     url = i.find('span.jcn > a')[0].attrs['href']
+#     #     name = i.find('span.jcn > a')[0].attrs['title'].split(" in")[0]
+#     #     direction = i.find('span.cont_fl_addr')[0].text
+#     #     rating = i.find('span.green-box')[0].text
+#     #     review = i.find('p.newrtings > a > span.rt_count.lng_vote')[0].text.split(' ')[0]
+#     #     contact_list = i.find('span.mobilesv')
+#     #     phone = "".join([strings_to_num(j.attrs['class'][-1].split("-")[-1]) for j in contact_list])
+#     #
+#     #     urls.append(url)
+#     #     names.append(name)
+#     #     directions.append(direction)
+#     #     phones.append(phone)
+#     #     ratings.append(rating)
+#     #     reviews.append(review)
+#     #     near_areas.append('')
+#     #     categories.append(cat)
+#     #     websites.append('https://www.justdial.com/')
+#
+#     return
 
 
 def my_scraper(input_state, input_cat, input_add, input_record_google=10, input_record_justdial=10):
