@@ -119,7 +119,7 @@ def for_google(query, no_of_records=10):
     else:
         records = records[:no_of_records].copy()
 
-    print('len of records :', len(records))
+    print('no_of_records, len of records :', no_of_records, len(records))
     # Looping over records
     for i in records:
         try:
@@ -274,7 +274,7 @@ def for_google(query, no_of_records=10):
 #     return
 
 
-def my_scraper(input_state, input_cat, input_add, input_record_google=10, input_record_justdial=10):
+def my_scraper(input_state, input_cat, input_add, input_record_google, input_record_justdial=10):
     # Query to search
     query_google = f'{input_cat} in {input_add} {input_state} \n'
     query_jd = f'{input_state}/{input_cat}-in-{input_add}'.replace(' ', '-')
