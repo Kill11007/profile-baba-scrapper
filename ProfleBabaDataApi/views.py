@@ -17,22 +17,22 @@ from urllib3 import PoolManager
 from requests_html import HTMLSession
 
 # For proxy list of India from (https://docs.proxyscrape.com)
-proxy_url = r'https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=US&ssl=all&anonymity=all'
-proxies = requests.get(proxy_url).text.split('\r\n')[:-1]
-proxy = random.choice(proxies)
+# proxy_url = r'https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=US&ssl=all&anonymity=all'
+# proxies = requests.get(proxy_url).text.split('\r\n')[:-1]
+# proxy = random.choice(proxies)
 
 
 def fetch_driver():
     global proxies
-    proxy = random.choice(proxies)
-
-    # Setting proxy settings
-    webdriver.DesiredCapabilities.FIREFOX['proxy'] = {
-        "httpProxy": proxy,
-        "ftpProxy": proxy,
-        "sslProxy": proxy,
-        "proxyType": "MANUAL",
-    }
+    # proxy = random.choice(proxies)
+    #
+    # # Setting proxy settings
+    # webdriver.DesiredCapabilities.FIREFOX['proxy'] = {
+    #     "httpProxy": proxy,
+    #     "ftpProxy": proxy,
+    #     "sslProxy": proxy,
+    #     "proxyType": "MANUAL",
+    # }
 
     # To add user-agent---------------------------------------------------
     opts = Options()
