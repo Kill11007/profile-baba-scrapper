@@ -50,6 +50,7 @@ def fetch_driver():
 
 # session for requests
 session = HTMLSession()
+time.sleep(1.1)
 
 # Getting driver
 driver = fetch_driver()
