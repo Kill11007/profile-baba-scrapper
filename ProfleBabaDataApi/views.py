@@ -37,13 +37,13 @@ def fetch_driver():
     # To add user-agent---------------------------------------------------
     opts = Options()
     # Setting up driver through env variable
-    # opts.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    opts.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     opts.headless = True
     opts.add_experimental_option('excludeSwitches', ['enable-logging'])
-    # opts.add_argument("--disable-dev-shm-usage")
-    # opts.add_argument("--no-sandbox")
-    # my_driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=opts)
-    my_driver = webdriver.Chrome(executable_path='./chromedriver.exe', options=opts)
+    opts.add_argument("--disable-dev-shm-usage")
+    opts.add_argument("--no-sandbox")
+    my_driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=opts)
+    # my_driver = webdriver.Chrome(executable_path='./chromedriver.exe', options=opts)
 
     return my_driver
 
