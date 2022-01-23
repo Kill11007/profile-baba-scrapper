@@ -297,6 +297,7 @@ def snippet_list(request):
             no_of_records_for_google = query['nr_google'] if 'nr_google' in query.keys() else 10
             data = my_scraper(state, cat, address, int(no_of_records_for_jd), int(no_of_records_for_google))
             print('data', data)
+            driver.quit()
             return JsonResponse(data, safe=False)
         except Exception as e:
             print('Exception in Api get request :', e)
