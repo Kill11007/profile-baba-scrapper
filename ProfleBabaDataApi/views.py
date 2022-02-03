@@ -39,7 +39,7 @@ def fetch_driver():
     opts.add_argument("user-agent=user_agent")
 
     # Setting headless browser
-    opts.headless = False
+    opts.headless = True
 
     # Setting up driver
     driver_path = Service("./chromedriver.exe")
@@ -53,12 +53,6 @@ driver = fetch_driver()
 
 # session for requests
 session = HTMLSession()
-
-# Headers for just Dial
-header = {
-    'Accept': '*/*',
-    'cookie': 'TKY=6d4cda7ba15ba5ded3176c33b61267b4e82d50aad34b56ab3c7ba470e443c912; _abck=B2BD03FA2A626FBFD5697984DC832F40~-1~YAAQPUo5FwlCG+R9AQAA9lnq9geVWqK74XLky4hwTe0kHAZJDMkmXfQbWqXPV8lu1R1myaq5h74j6ZlUIYLFc3YbZbGfMajfZQoYsHmly0K3CH1RUiPpUCNl1b0Anm7BWgsXEZ+Gr/8qnV7LQqxZU9i8Vf0w5pPGKVCCkDTrqAxyOHsviYGGFU3Y4CDf5odsfsgbPOpXh4iBvEuPf1n5f0NRH8ypEFkWo+6hm4TUhpnMMSoQZcYN7/T167N0T6DTf0bWGcZqDrdz2ucY3zxXIMRf8ZX2U4a7ZL4VfqEBgFEhV1Y4VZnWwfWzYraokFILpN46+jIw4O3QEOHLPr38200vDHRrrXgTyncTYkv8ri8R38d9VlJC6O13agbkszUjKnKDcJluBKYBwMED~-1~-1~-1; _ctok=c0db6a9cb1a43b0b9a9ec5ffb88cdd49dc6235a77543330e5775afbc85d4943d; ak_bmsc=A5352C50CF860DD0B7C4226E5D089EE2~000000000000000000000000000000~YAAQLCEPF8ze8rd9AQAAJxjy9g5GtdYPipN3vJAWrXQ+3TqKoHN02j3j7zrhoqjubv/2BOUfdCaAhv2oW0q4VTNSfO05KkPbom0V5SO0KVPqEjI9bkpdUwgzGzyGOmK/+dF4LftTylJrG1MlqnDoDe0QoQ7zV8k6emRRx+3q0dfb1K6BW5bG1t/Iv+dY9dc5d1uonqUKXhWHtgsZOHMI+ielQxXQShiTp0WkfVDvt+PT2jS+ccQfSrPgePhN3nfPcuk3uLsnJjTqiNskDUFxfDnOnE8Y4NxBOY5fTtlJS8WDgZyWtzULdpKlGqO9rGZOwMUCZrKcsYhzgB07+wP6lfMdk6vlOUftDBnolj49JWmVlNoJbngpm5UDEyhvHdGAdTvwF+Ah+mQ2QddspwJvnCzTQerRh6JdeQ==; attn_user=logout; bm_mi=17863342B120E586ABC3FF83B6D0D933~7YGDThQe7Q8fq1WwBYjtPk27myCE96uXDvCM5kKxFW3QB5kTy2LHxOhkaciuGqrRcCKz6Zbhq9d/9m3kHtMCe6WejCT5x6A1SS2ugIJpcbbFyXAOR+svBAMsNyb79rPzKT8+rym9rFQenqH0EowfZMrJYpB4Vc9km1HZb4taNlw7P4QMal3mZb1Cw9vmZMt8F9mHWVbmiC38dVYO4cLg3NVTd5GTRwWlrb8Q4hlCYzk=; bm_sv=11DA979D7A0439D4C1268DA4FF7A3ADB~ezlXBQMhZps13vd0CuMdHPjpJagQdL9wwdH/JKK2TzSN5gU3rH6gNGfGRLYIHQXSYxSZmIIKbuaCt/N7MTeYycDxnoyVJruJOjpWx8qux34QC+n0OM8ZBv/x6BmP59im7Yd6HSyGj9z6xv5J+KPKQyQVnQ3+Y3XKQQxOAA91KOE=; bm_sz=C7FABE25C38754C832DF489AD7B1BA14~YAAQPUo5FwtCG+R9AQAA9lnq9g4QbALqk67Ir2oHKq2RidfEfp6BfcMYtrDDLNrRF+cvXsPtu3QAFbI8ontMNC7tLkpHoAgg/TfRQ5DqZyx6CX29TALl/1Rz9JXjApbGkzx2dBy/VoxfNSCqREjv5PFKNJiXr2lFmQ88Sg8/6VDnvSaQQCysqAL9mp64rSoEjikjzJC22eNCflPlHlwAJSRYc57ZusMkSl4EZdk1uBWoJ+xd818Sm06GPErQDmb+tu0YFEtUOUizGv9vhglf8xdv2qOCp/TtmVbHdyAZKJsBOiLWDw==~4601668~4470324; main_city=Mumbai; ppc=; Continent=AS; PHPSESSID=kjbj83ljbnc1nfh86bis6j8qf7'
-}
 
 
 # For phone no's
@@ -87,6 +81,7 @@ def for_google(data_list, query, no_of_records=10):
 
     base_url = 'https://www.google.com'
     driver.get(base_url)
+    time.sleep(1.1)
 
     # Google search box
     driver.find_element(By.CSS_SELECTOR, 'input[name="q"]').send_keys(query)
@@ -203,16 +198,27 @@ def for_google(data_list, query, no_of_records=10):
         data_list.append({'url': web_link, 'name': name, 'address': direction, 'near_area': near_area, 'phone': phone,
                           'rating': rating, 'review': review, 'category': category, 'website': base_url})
 
-    return data_list
+    return
 
 
-def for_just_dial(data_list, query, cat, no_of_records=10):
+def for_just_dial(data_list, query, no_of_records=10):
+    base_url = 'https://www.justdial.com'
+    driver.get(base_url)
 
-    url = f'https://www.justdial.com/{query}'
-    print('url :', url)
-    driver.get(url)
-    res = session.get(url)
-    store_details = res.html.find('div.store-details')
+    # Send Address
+    ele = driver.find_element(By.CSS_SELECTOR, 'input#srchbx')
+    ele.clear()
+    ele.send_keys(query['cat'])
+    ele.send_keys('\n')
+
+    # Get cat Id
+    cat_id = driver.current_url.split('/')[-1]
+
+    # Making query for justdial
+    query_jd = f"{base_url}/{query['state']}/{query['cat']} in {query['add']}/{cat_id}".replace(' ', '-')
+    print('query_jd :', query_jd)
+
+    store_details = session.get(query_jd).html.find('div.store-details.sp-detail')
 
     if len(store_details) < no_of_records:
         fetch_rec = len(store_details)
@@ -230,30 +236,34 @@ def for_just_dial(data_list, query, cat, no_of_records=10):
         phone = "".join([strings_to_num(j.attrs['class'][-1].split("-")[-1]) for j in contact_list])
 
         data_list.append({'url': url, 'name': name, 'address': direction, 'near_area': '', 'phone': phone,
-                          'rating': rating, 'review': review, 'category': cat, 'website': 'https://www.justdial.com/'})
+                          'rating': rating, 'review': review, 'category': query['cat'], 'website': 'https://www.justdial.com/'})
 
-    return data_list
+    return
 
 
 def my_scraper(input_state, input_cat, input_add, input_record_google, input_record_justdial):
     # Query to search
     data_list = []
-    query_google = f'{input_cat} in {input_add} {input_state} \n'
-    query_jd = f'{input_state}/search?q={input_cat}-in-{input_add}'.replace(' ', '-')
+    query_jd = {
+        'state': input_state,
+        'cat': input_cat,
+        'add': input_add
+    }
 
     # For JustDial
     try:
         print('going for JustDial...')
-        data_list = for_just_dial(data_list, query_jd, input_cat, input_record_justdial)
+        for_just_dial(data_list, query_jd, input_record_justdial)
     except Exception as e:
         print('Exception in JustDial :', e)
 
     # For Google
     try:
         print('going for Google...')
-        data_list = for_google(data_list, query_google, input_record_google)
+        query_google = f'{input_cat} in {input_add} {input_state} \n'
+        for_google(data_list, query_google, input_record_google)
     except Exception as e:
-        print('Exception in JustDial :', e)
+        print('Exception in Google :', e)
 
     return data_list
 
