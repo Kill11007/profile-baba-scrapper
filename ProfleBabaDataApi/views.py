@@ -207,7 +207,12 @@ def for_google(data_list, query, no_of_records=10):
 
 
 def for_just_dial(data_list, query, cat, no_of_records=10):
-    store_details = session.get('https://www.justdial.com/' + query).html.find('div.store-details')
+
+    url = f'https://www.justdial.com/{query}'
+    print('url :', url)
+    driver.get(url)
+    res = session.get(url)
+    store_details = res.html.find('div.store-details')
 
     if len(store_details) < no_of_records:
         fetch_rec = len(store_details)
@@ -234,15 +239,21 @@ def my_scraper(input_state, input_cat, input_add, input_record_google, input_rec
     # Query to search
     data_list = []
     query_google = f'{input_cat} in {input_add} {input_state} \n'
-    query_jd = f'{input_state}/{input_cat}-in-{input_add}'.replace(' ', '-')
+    query_jd = f'{input_state}/search?q={input_cat}-in-{input_add}'.replace(' ', '-')
 
     # For JustDial
-    print('going for JustDial...')
-    data_list = for_just_dial(data_list, query_jd, input_cat, input_record_justdial)
+    try:
+        print('going for JustDial...')
+        data_list = for_just_dial(data_list, query_jd, input_cat, input_record_justdial)
+    except Exception as e:
+        print('Exception in JustDial :', e)
 
     # For Google
-    # print('going for Google...')
-    # data_list = for_google(data_list, query_google, input_record_google)
+    try:
+        print('going for Google...')
+        data_list = for_google(data_list, query_google, input_record_google)
+    except Exception as e:
+        print('Exception in JustDial :', e)
 
     return data_list
 
@@ -263,7 +274,3 @@ def snippet_list(request):
             return JsonResponse(data, safe=False)
         except Exception as e:
             print('Exception in Api get request :', e)
-            status_code = 501
-            message = "Internal Server Error"
-            return JsonResponse({message: e}, status=status_code)
-
