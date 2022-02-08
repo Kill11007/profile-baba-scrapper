@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-za*+2groppk$b1gcoegf0ms&ywn+g47kgra=1r$#uls4b+j9!!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'https://web-scrapper-api.profilebaba.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '127.0.0.1:8001' 'https://profilebaba.com', '40d2-103-77-42-255.ngrok.io', '9626-103-83-145-221.ngrok.io', '103.83.145.221']
 
 # Application definition
 
