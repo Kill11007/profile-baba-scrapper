@@ -14,12 +14,11 @@ from rest_framework.decorators import api_view
 # Selenium imports
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 def fetch_driver():
-
     # For proxy list of India from (https://docs.proxyscrape.com)
     proxy_url = 'https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=' \
                 '10000&country=US&ssl=all&anonymity=all'
@@ -39,11 +38,10 @@ def fetch_driver():
     opts.add_argument("user-agent=user_agent")
 
     # Setting headless browser
-    opts.headless = True
+    opts.headless = False
 
     # Setting up driver
-    driver_path = Service("./chromedriver.exe")
-    my_driver = webdriver.Chrome(service=driver_path, options=opts)
+    my_driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), options=opts)
 
     return my_driver
 
@@ -107,7 +105,7 @@ def for_google(data_list, query, no_of_records=10):
     else:
         records = records[:no_of_records].copy()
 
-    print('no_of_records, len of records :', no_of_records, len(records))
+    print('records found for google :', len(records))
     # Looping over records
     for i in records:
         try:
@@ -221,19 +219,48 @@ def for_just_dial(data_list, query, no_of_records=10):
     store_details = session.get(query_jd).html.find('div.store-details.sp-detail')
 
     if len(store_details) < no_of_records:
-        fetch_rec = len(store_details)
+        store_details = store_details[:len(store_details)]
     else:
-        fetch_rec = no_of_records
+        store_details = store_details[:no_of_records]
+
+    print('records found for justDial :', len(store_details))
 
     # iterating the storeDetails
-    for i in store_details[:fetch_rec]:
-        url = i.find('span.jcn > a')[0].attrs['href']
-        name = i.find('span.jcn > a')[0].attrs['title'].split(" in")[0]
-        direction = i.find('span.cont_fl_addr')[0].text
-        rating = i.find('span.green-box')[0].text
-        review = i.find('p.newrtings > a > span.rt_count.lng_vote')[0].text.split(' ')[0]
-        contact_list = i.find('span.mobilesv')
-        phone = "".join([strings_to_num(j.attrs['class'][-1].split("-")[-1]) for j in contact_list])
+    for i in store_details:
+        try:
+            url = i.find('span.jcn > a')[0].attrs['href']
+        except:
+            url = ''
+
+        try:
+            name = i.find('span.jcn > a')[0].attrs['title'].split(" in")[0]
+        except:
+            name = ''
+
+        try:
+            direction = i.find('span.cont_fl_addr')[0].text
+        except:
+            direction = ''
+
+        try:
+            rating = i.find('span.green-box')[0].text
+        except:
+            rating = ''
+
+        try:
+            review = i.find('p.newrtings > a > span.rt_count.lng_vote')[0].text.split(' ')[0]
+        except:
+            review = ''
+
+        try:
+            contact_list = i.find('span.mobilesv')
+        except:
+            contact_list = ''
+
+        try:
+            phone = "".join([strings_to_num(j.attrs['class'][-1].split("-")[-1]) for j in contact_list])
+        except:
+            phone = ''
 
         data_list.append({'url': url, 'name': name, 'address': direction, 'near_area': '', 'phone': phone,
                           'rating': rating, 'review': review, 'category': query['cat'], 'website': 'https://www.justdial.com/'})
