@@ -1,11 +1,10 @@
 # Other imports
-import os
 import time
 import random
-import urllib3
 import requests
 from bs4 import BeautifulSoup
 from requests_html import HTMLSession
+from concurrent.futures import ThreadPoolExecutor
 
 # Django imports
 from django.http import JsonResponse
@@ -38,19 +37,12 @@ def fetch_driver():
     opts.add_argument("user-agent=user_agent")
 
     # Setting headless browser
-    opts.headless = False
+    opts.headless = True
 
     # Setting up driver
     my_driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), options=opts)
 
     return my_driver
-
-
-# Getting driver
-driver = fetch_driver()
-
-# session for requests
-session = HTMLSession()
 
 
 # For phone no's
@@ -74,30 +66,31 @@ def strings_to_num(argument):
     return switcher.get(argument, "")
 
 
-def for_google(data_list, query, no_of_records=10):
-    global driver
+def for_google(session, data_list, query, no_of_records=10):
+    # Getting driver
+    driver1 = fetch_driver()
 
     base_url = 'https://www.google.com'
-    driver.get(base_url)
+    driver1.get(base_url)
     time.sleep(1.1)
 
     # Google search box
-    driver.find_element(By.CSS_SELECTOR, 'input[name="q"]').send_keys(query)
+    driver1.find_element(By.CSS_SELECTOR, 'input[name="q"]').send_keys(query)
 
     # Click on more items
     try:
-        driver.find_element(By.CSS_SELECTOR, 'span.mugnXc.Q0cixc').click()
+        driver1.find_element(By.CSS_SELECTOR, 'span.mugnXc.Q0cixc').click()
     except:
-        driver.find_element(By.CSS_SELECTOR, 'span.wUrVib.OSrXXb').click()
+        driver1.find_element(By.CSS_SELECTOR, 'span.wUrVib.OSrXXb').click()
 
     # select all links through soup
-    soup = BeautifulSoup(driver.page_source, 'lxml')
+    soup = BeautifulSoup(driver1.page_source, 'lxml')
 
     # Fetching all links
     records = soup.select('a.tHmfQe')
 
     if len(records) == 0:
-        records = driver.find_elements(By.CSS_SELECTOR, 'div.eDIkBe > span:nth-child(1)')
+        records = driver1.find_elements(By.CSS_SELECTOR, 'div.eDIkBe > span:nth-child(1)')
 
     # Only select no of records given
     if len(records) < no_of_records:
@@ -119,9 +112,9 @@ def for_google(data_list, query, no_of_records=10):
             name = r.find('h2.qrShPb')[0].text
         except:
             try:
-                driver.execute_script("arguments[0].click();", i)
+                driver1.execute_script("arguments[0].click();", i)
                 time.sleep(1.1)
-                name = driver.find_elements(By.CSS_SELECTOR, 'h2.qrShPb')[0].text
+                name = driver1.find_elements(By.CSS_SELECTOR, 'h2.qrShPb')[0].text
             except:
                 name = ''
 
@@ -130,7 +123,7 @@ def for_google(data_list, query, no_of_records=10):
             direction = r.find('span.LrzXr')[0].text
         except:
             try:
-                direction = driver.find_elements(By.CSS_SELECTOR, 'span.LrzXr')[0].text
+                direction = driver1.find_elements(By.CSS_SELECTOR, 'span.LrzXr')[0].text
             except:
                 direction = ''
 
@@ -139,7 +132,7 @@ def for_google(data_list, query, no_of_records=10):
             phone = r.find('span.LrzXr.zdqRlf.kno-fv')[0].text.replace(' ', '')
         except:
             try:
-                phone = driver.find_elements(By.CSS_SELECTOR, 'span.LrzXr.zdqRlf.kno-fv')[0].text
+                phone = driver1.find_elements(By.CSS_SELECTOR, 'span.LrzXr.zdqRlf.kno-fv')[0].text
             except:
                 phone = ''
 
@@ -148,7 +141,7 @@ def for_google(data_list, query, no_of_records=10):
             near_area = r.find('a.V3h3K')[0].text
         except:
             try:
-                near_area = driver.find_elements(By.CSS_SELECTOR, 'a.V3h3K')[0].text
+                near_area = driver1.find_elements(By.CSS_SELECTOR, 'a.V3h3K')[0].text
             except:
                 near_area = ''
 
@@ -157,7 +150,7 @@ def for_google(data_list, query, no_of_records=10):
             rating = r.find('span.Aq14fc')[0].text
         except:
             try:
-                rating = driver.find_elements(By.CSS_SELECTOR, 'span.Aq14fc')[0].text
+                rating = driver1.find_elements(By.CSS_SELECTOR, 'span.Aq14fc')[0].text
             except:
                 rating = ''
 
@@ -166,7 +159,7 @@ def for_google(data_list, query, no_of_records=10):
             review = r.find('span.hqzQac > span > a > span')[0].text.split(' ')[0]
         except:
             try:
-                review = driver.find_elements(By.CSS_SELECTOR, 'span.hqzQac > span > a > span')[0].text.split(' ')[0]
+                review = driver1.find_elements(By.CSS_SELECTOR, 'span.hqzQac > span > a > span')[0].text.split(' ')[0]
             except:
                 review = ''
 
@@ -175,7 +168,7 @@ def for_google(data_list, query, no_of_records=10):
             category = r.find('span.YhemCb')[0].text
         except:
             try:
-                category = driver.find_elements(By.CSS_SELECTOR, 'span.YhemCb')[0].text
+                category = driver1.find_elements(By.CSS_SELECTOR, 'span.YhemCb')[0].text
             except:
                 category = ''
 
@@ -186,7 +179,7 @@ def for_google(data_list, query, no_of_records=10):
                 web_link = web_link[0]
         except:
             try:
-                web_link = [i.get_attribute('href') for i in driver.find_elements(
+                web_link = [i.get_attribute('href') for i in driver1.find_elements(
                     By.CSS_SELECTOR, 'div.QqG1Sd a.ab_button') if i.text == 'Website']
                 if len(web_link) != 0:
                     web_link = web_link[0]
@@ -196,21 +189,29 @@ def for_google(data_list, query, no_of_records=10):
         data_list.append({'url': web_link, 'name': name, 'address': direction, 'near_area': near_area, 'phone': phone,
                           'rating': rating, 'review': review, 'category': category, 'website': base_url})
 
-    return
+    # quit driver
+    driver1.quit()
+    return data_list
 
 
-def for_just_dial(data_list, query, no_of_records=10):
+def for_just_dial(session, data_list, query, no_of_records=10):
+    # Getting driver
+    driver2 = fetch_driver()
+
     base_url = 'https://www.justdial.com'
-    driver.get(base_url)
+    driver2.get(base_url)
 
     # Send Address
-    ele = driver.find_element(By.CSS_SELECTOR, 'input#srchbx')
+    ele = driver2.find_element(By.CSS_SELECTOR, 'input#srchbx')
     ele.clear()
     ele.send_keys(query['cat'])
     ele.send_keys('\n')
 
     # Get cat Id
-    cat_id = driver.current_url.split('/')[-1]
+    cat_id = driver2.current_url.split('/')[-1]
+
+    # quit driver2
+    driver2.quit()
 
     # Making query for justdial
     query_jd = f"{base_url}/{query['state']}/{query['cat']} in {query['add']}/{cat_id}".replace(' ', '-')
@@ -265,49 +266,54 @@ def for_just_dial(data_list, query, no_of_records=10):
         data_list.append({'url': url, 'name': name, 'address': direction, 'near_area': '', 'phone': phone,
                           'rating': rating, 'review': review, 'category': query['cat'], 'website': 'https://www.justdial.com/'})
 
-    return
+    return data_list
 
 
-def my_scraper(input_state, input_cat, input_add, input_record_google, input_record_justdial):
-    # Query to search
+def my_scraper(my_query):
+    # session for requests
+    session = HTMLSession()
+
     data_list = []
-    query_jd = {
-        'state': input_state,
-        'cat': input_cat,
-        'add': input_add
-    }
+    query_google = f"{my_query['cat']} in {my_query['add']} {my_query['state']} \n"
 
-    # For JustDial
-    try:
-        print('going for JustDial...')
-        for_just_dial(data_list, query_jd, input_record_justdial)
-    except Exception as e:
-        print('Exception in JustDial :', e)
+    with ThreadPoolExecutor(max_workers=5) as pool:
+        # For JustDial
+        # print('going for JustDial...')
+        try:
+            pool.submit(for_just_dial, session, data_list, my_query, my_query['n_justdial'])
+        except Exception as e:
+            print('Exception in Google :', e)
 
-    # For Google
-    try:
-        print('going for Google...')
-        query_google = f'{input_cat} in {input_add} {input_state} \n'
-        for_google(data_list, query_google, input_record_google)
-    except Exception as e:
-        print('Exception in Google :', e)
+        # For Google
+        # print('going for Google...')
+        try:
+            pool.submit(for_google, session, data_list, query_google, my_query['n_google'])
+        except Exception as e:
+            print('Exception in Google :', e)
 
     return data_list
 
 
 @api_view(['GET', 'POST'])
 def snippet_list(request):
-    if request.method == 'GET':
-        try:
+    try:
+        print('...............................................Requested..........................................')
+        if request.method == 'GET':
             query = request.query_params
-            state = query['state'] if 'state' in query.keys() else ''
-            cat = query['cat']
-            address = query['address']
-            no_of_records_for_jd = query['nr_jd'] if 'nr_jd' in query.keys() else 10
-            no_of_records_for_google = query['nr_google'] if 'nr_google' in query.keys() else 10
-            data = my_scraper(state, cat, address, int(no_of_records_for_google), int(no_of_records_for_jd))
-            print('data', data)
-            # driver.quit()
+            my_query = {
+                'state': query['state'] if 'state' in query.keys() else '',
+                'cat': query['cat'],
+                'add': query['address'],
+                'n_google': int(query['nr_jd']) if 'nr_jd' in query.keys() else 10,
+                'n_justdial': int(query['nr_google']) if 'nr_google' in query.keys() else 10
+            }
+
+            data = my_scraper(my_query)
+            # print('data', data)
+            if len(data) == 0:
+                print('--------data not found--------')
+            else:
+                print('----------data found----------')
             return JsonResponse(data, safe=False)
-        except Exception as e:
-            print('Exception in Api get request :', e)
+    except Exception as e:
+        print('Exception in Api get request :', e)

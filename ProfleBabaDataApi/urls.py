@@ -16,8 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from ProfleBabaDataApi import views
+from concurrent.futures import ThreadPoolExecutor
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('data/json', views.snippet_list),
-]
+
+with ThreadPoolExecutor(max_workers=5) as pool:
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('data/json', views.snippet_list),
+    ]
+
