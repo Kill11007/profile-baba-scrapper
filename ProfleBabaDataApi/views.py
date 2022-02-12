@@ -1,4 +1,5 @@
 # Other imports
+import re
 import time
 import random
 import requests
@@ -45,25 +46,34 @@ def fetch_driver():
     return my_driver
 
 
-# For phone no's
-def strings_to_num(argument):
-    switcher = {
-        'dc': '+',
-        'fe': '(',
-        'hg': ')',
-        'ba': '-',
-        'acb': '0',
-        'yz': '1',
-        'wx': '2',
-        'vu': '3',
-        'ts': '4',
-        'rq': '5',
-        'po': '6',
-        'nm': '7',
-        'lk': '8',
-        'ji': '9'
-    }
-    return switcher.get(argument, "")
+def get_phone_codes(res):
+    # get style which have phones
+    styles = res.html.find('style[type="text/css"]')
+    phone_content = ''
+    for s in styles:
+        my_text = s.text
+        if '.icon-' in my_text:
+            # regex to find no content from script
+            phone_content = re.findall(r'\.icon-[a-z, A-Z]{1,5}:before\{content:"\\[\d\w]{5}"}', my_text)
+            break
+
+    phone_code = {pc.split('.icon-')[-1].split(':')[0]: str(index) for index, pc in enumerate(phone_content)}
+
+    # Correct for "+", "-", "(", ")"
+    keys = list(phone_code.keys())
+    phone_code[keys[-4]] = "+"
+    phone_code[keys[-3]] = "-"
+    phone_code[keys[-2]] = "("
+    phone_code[keys[-1]] = "}"
+    return phone_code
+
+
+def get_phone(el, codes):
+    contact_list = el.find('span.mobilesv')
+    phone = "".join([codes[j.attrs['class'][-1].split("-")[-1]] for j in contact_list])
+    if len(phone) > 11:
+        phone = phone[:2] + '-' + phone[2:]
+    return phone
 
 
 def for_google(session, data_list, query, no_of_records=10):
@@ -213,11 +223,18 @@ def for_just_dial(session, data_list, query, no_of_records=10):
     # quit driver2
     driver2.quit()
 
-    # Making query for justdial
+    # Making query for
     query_jd = f"{base_url}/{query['state']}/{query['cat']} in {query['add']}/{cat_id}".replace(' ', '-')
     print('query_jd :', query_jd)
 
-    store_details = session.get(query_jd).html.find('div.store-details.sp-detail')
+    # JD response
+    res = session.get(query_jd)
+
+    # Get codes for phone no. from jd
+    codes = get_phone_codes(res)
+
+    # stores
+    store_details = res.html.find('div.store-details.sp-detail')
 
     if len(store_details) < no_of_records:
         store_details = store_details[:len(store_details)]
@@ -254,13 +271,9 @@ def for_just_dial(session, data_list, query, no_of_records=10):
             review = ''
 
         try:
-            contact_list = i.find('span.mobilesv')
-        except:
-            contact_list = ''
-
-        try:
-            phone = "".join([strings_to_num(j.attrs['class'][-1].split("-")[-1]) for j in contact_list])
-        except:
+            phone = get_phone(i, codes)
+        except Exception as e:
+            print('Error in phone JustDial', e)
             phone = ''
 
         data_list.append({'url': url, 'name': name, 'address': direction, 'near_area': '', 'phone': phone,
